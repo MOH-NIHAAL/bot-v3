@@ -560,6 +560,7 @@ async def auto_filter(client, msg, spoll=False):
     
 
 async def advantage_spell_chok(msg):
+    saerch = msg.text
     query = re.sub(
         r"\b(pl(i|e)*?(s|z+|ease|se|ese|(e+)s(e)?)|((send|snd|giv(e)?|gib)(\sme)?)|movie(s)?|new|latest|br((o|u)h?)*|^h(e|a)?(l)*(o)*|mal(ayalam)?|t(h)?amil|file|that|find|und(o)*|kit(t(i|y)?)?o(w)?|thar(u)?(o)*w?|kittum(o)*|aya(k)*(um(o)*)?|full\smovie|any(one)|with\ssubtitle(s)?)",
         "", msg.text, flags=re.IGNORECASE)  # plis contribute some common words
@@ -602,8 +603,9 @@ async def advantage_spell_chok(msg):
         await k.delete()
         return
     SPELL_CHECK[msg.message_id] = movielist
+    reply = search.replace(" ", "+")
     buttons = [[
-        InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/search?q={msg.text.replace(" ", "+")}")
+        InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/search?q={reply}")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     v = await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....If you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️). Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)

@@ -2,7 +2,7 @@ import os
 from pyrogram import Client, filters
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant, MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty
 from info import IMDB_TEMPLATE
-from utils import extract_user, get_file_id, get_poster, last_online
+from utils import extract_user, get_file_id, get_poster, last_online, temp
 import time
 from datetime import datetime
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
@@ -220,7 +220,7 @@ async def about_me(client, message):
         reply_markup = InlineKeyboardMarkup(buttons)
         await message.reply_photo(
             photo="https://telegra.ph/file/49ce361fe218cd6cae611.jpg",
-            caption=script.ABOUT_TXT,
+            caption=script.ABOUT_TXT.format(temp.B_NAME),
             reply_markup=reply_markup,
             parse_mode='html'
         )

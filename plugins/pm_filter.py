@@ -603,7 +603,7 @@ async def advantage_spell_chok(msg):
         return
     SPELL_CHECK[msg.message_id] = movielist
     buttons = [[
-        InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/q?={msg.text.replace(" ", "+")}")
+        InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/search?q={msg.text.replace(" ", "+")}")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     v = await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....If you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️). Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)

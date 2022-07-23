@@ -556,7 +556,7 @@ async def auto_filter(client, msg, spoll=False):
         btn.append(
             [InlineKeyboardButton(text="🗓 1 - 1", callback_data="pages")]
         )
-        await msg.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><v>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{message.text} 👇</b>", rely_markup=InlineKeyboardMarkup(btn))
+        await msg.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><v>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{message.text} 👇</b>", reply_markup=InlineKeyboardMarkup(btn))
     
 
 async def advantage_spell_chok(msg):
@@ -608,7 +608,7 @@ async def advantage_spell_chok(msg):
         InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/search?q={reply}")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
-    v = await msg.reply_photo(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....If you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️). Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)
+    v = await msg.reply_photo(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....\nIf you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️).\n Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)
     await asyncio.sleep(100)
     await v.delete()
     

@@ -559,7 +559,7 @@ async def advantage_spell_chok(msg):
         InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/q?={msg.text}")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
-    await msg.reply_text(text="Hi", reply_markup=reply_markup)
+    await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Hi", reply_markup=reply_markup)
 
 async def manual_filters(client, message, text=False):
     group_id = message.chat.id

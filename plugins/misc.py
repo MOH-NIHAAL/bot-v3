@@ -210,5 +210,18 @@ async def imdb_callback(bot: Client, quer_y: CallbackQuery):
         await quer_y.message.edit(caption, reply_markup=InlineKeyboardMarkup(btn), disable_web_page_preview=False)
     await quer_y.answer()
         
-
+@Client.on_message(filters.command(['about']))
+async def about_me(client, message):
+        buttons = [[
+            InlineKeyboardButton('ɢʀᴏᴜᴘ', url='https://t.me/cinema_lookam'),
+            InlineKeyboardButton('sᴜᴘᴘᴏʀᴛ', url='https://t.me/NL_BOTxCHAT'),
+            InlineKeyboardButton('ᴄʟᴏsᴇ', callback_data='close_data')
+        ]]
+        reply_markup = InlineKeyboardMarkup(buttons)
+        await message.reply_photo(
+            photo="https://telegra.ph/file/49ce361fe218cd6cae611.jpg",
+            caption=script.ABOUT_TXT,
+            reply_markup=reply_markup,
+            parse_mode='html'
+        )
         

@@ -64,7 +64,7 @@ async def next_page(bot, query):
         btn = [
             [
                 InlineKeyboardButton(
-                    text=f"[{get_size(file.file_size)}] {file.file_name}", callback_data=f'files#{file.file_id}'
+                    text=f"📁 {get_size(file.file_size)} » {file.file_name}", callback_data=f'files#{file.file_id}'
                 ),
             ]
             for file in files
@@ -357,12 +357,15 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
                 return
             else:
-                await client.send_cached_media(
-                    chat_id=query.from_user.id,
+                ur = await client.send_cached_media(
+                    chat_id=CH_FILTER,
                     file_id=file_id,
                     caption=f_caption,
                     protect_content=True if ident == "filep" else False 
                 )
+                ur2 = await query.message.reply_text(
+                f"<b>Hey 👋 {message.from_user.mention} 🥰\n
+                📁 File Name : {file_name}
         except UserIsBlocked:
             await query.answer('Unblock the bot mahn !', show_alert=True)
         except PeerIdInvalid:
@@ -503,11 +506,11 @@ async def auto_filter(client, msg, spoll=False):
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
         btn.append(
-            [InlineKeyboardButton(text="NEXT ⏩", callback_data=f"next_{req}_{key}_{offset}")]
+            [InlineKeyboardButton(text="ɴᴇxᴛ ➡️", callback_data=f"next_{req}_{key}_{offset}")]
         )
     else:
         btn.append(
-            [InlineKeyboardButton(text="🗓 1/1", callback_data="pages")]
+            [InlineKeyboardButton(text="🗓 1 - 1", callback_data="pages")]
         )
         await msg.reply_photo(photo="", caption=f"<b><v>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{Search} 👇</b>", rely_markup=InlineKeyboardMarkup(btn))
     
@@ -559,7 +562,7 @@ async def advantage_spell_chok(msg):
         InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/q?={msg.text}")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
-    await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Hi", reply_markup=reply_markup)
+    await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....If you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️). Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)
 
 async def manual_filters(client, message, text=False):
     group_id = message.chat.id

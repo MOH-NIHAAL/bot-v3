@@ -92,7 +92,7 @@ async def next_page(bot, query):
     if n_offset == 0:
         btn.append(
             [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
-             InlineKeyboardButton(f"📃 Pages {math.ceil(int(offset) / 10) + 1} / {math.ceil(total / 10)}",
+             InlineKeyboardButton(f"📃 Pages {math.ceil(int(offset) / 10) + 1} - {math.ceil(total / 10)}",
                                   callback_data="pages")]
         )
     elif off_set is None:
@@ -373,7 +373,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
-                            InlineKeyboardButton("📥  ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  📥", url = ms.link)
+                            InlineKeyboardButton("📥  ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  📥", url = ur.link)
                         ],
                         [
                             InlineKeyboardButton("⚠️ ᴄᴀɴɴᴏᴛ ᴀᴄᴄᴇss ❓ ᴄʟɪᴄᴋ ʜᴇʀᴇ ⚠️", url = f"{CH_LINK}")
@@ -382,17 +382,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 )
             )
             await asyncio.sleep(600)
-            await msg1.delete()            
-            await ms.delete()
-            del msg1, ms
+            await ur2.delete()            
+            await ur.delete()
+            del ur2, ms
         except Exception as e:
             logger.exception(e, exc_info=True)
+            
         except UserIsBlocked:
             await query.answer('Unblock the bot mahn !', show_alert=True)
         except PeerIdInvalid:
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
         except Exception as e:
             await query.answer(url=f"https://t.me/{temp.U_NAME}?start={ident}_{file_id}")
+    
     elif query.data.startswith("checksub"):
         if AUTH_CHANNEL and not await is_subscribed(client, query):
             await query.answer("I Like Your Smartness, But Don't Be Oversmart 😒", show_alert=True)
@@ -416,7 +418,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         if f_caption is None:
             f_caption = f"{title}"
         await query.answer()
-        await client.send_cached_media(
+        n = await client.send_cached_media(
             chat_id=CH_FILTER,
             file_id=file_id,
             caption=f_caption,
@@ -429,21 +431,19 @@ async def cb_handler(client: Client, query: CallbackQuery):
         True,
         'html',
         disable_web_page_preview=True,
-        reply_markup=InlineKeyboardMarkup([[
-
-                [
-                    InlineKeyboardButton("📥  ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  📥", url = ms.link)
-                ],
-                [
-                            InlineKeyboardButton("⚠️ ᴄᴀɴɴᴏᴛ ᴀᴄᴄᴇss ❓ ᴄʟɪᴄᴋ ʜᴇʀᴇ ⚠️", url = f"{CH_LINK}")
-                ]
-                 
-            ]])
+        reply_markup=InlineKeyboardMarkup( 
+                [[
+                    InlineKeyboardButton("📥  ᴅᴏᴡɴʟᴏᴀᴅ ʟɪɴᴋ  📥", url = n.link)
+                    ],[
+                    InlineKeyboardButton("⚠️ ᴄᴀɴɴᴏᴛ ᴀᴄᴄᴇss ❓ ᴄʟɪᴄᴋ ʜᴇʀᴇ ⚠️", url = f"{CH_LINK}")
+                ]]
+   
+            )
         )
         await asyncio.sleep(600)
-        await msg1.delete()            
-        await ms.delete()
-            del msg1, ms
+        await n2.delete()            
+        await n.delete()
+        del n2, n
         
     elif query.data == "pages":
         await query.answer()

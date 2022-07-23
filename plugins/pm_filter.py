@@ -556,8 +556,59 @@ async def auto_filter(client, msg, spoll=False):
         btn.append(
             [InlineKeyboardButton(text="🗓 1 - 1", callback_data="pages")]
         )
-        await msg.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><v>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{message.text} 👇</b>", reply_markup=InlineKeyboardMarkup(btn))
+           
+    imdb = await get_poster(search, file=(files[0]).file_name) if settings["imdb"] else None
+    TEMPLATE = settings['template']
+    if imdb:
+        cap = TEMPLATE.format(
+            query=search,
+            title=imdb['title'],
+            votes=imdb['votes'],
+            aka=imdb["aka"],
+            seasons=imdb["seasons"],
+            box_office=imdb['box_office'],
+            localized_title=imdb['localized_title'],
+            kind=imdb['kind'],
+            imdb_id=imdb["imdb_id"],
+            cast=imdb["cast"],
+            runtime=imdb["runtime"],
+            countries=imdb["countries"],
+            certificates=imdb["certificates"],
+            languages=imdb["languages"],
+            director=imdb["director"],
+            writer=imdb["writer"],
+            producer=imdb["producer"],
+            composer=imdb["composer"],
+            cinematographer=imdb["cinematographer"],
+            music_team=imdb["music_team"],
+            distributors=imdb["distributors"],
+            release_date=imdb['release_date'],
+            year=imdb['year'],
+            genres=imdb['genres'],
+            poster=imdb['poster'],
+            plot=imdb['plot'],
+            rating=imdb['rating'],
+            url=imdb['url'],
+            **locals()
+        )
+    else:
+        cap = f"🔰 𝙷𝙴𝚁𝙴 𝚆𝙷𝙰𝚃 𝙸 𝙵𝙾𝚄𝙽𝙳 𝙵𝙾𝚁 𝚈𝙾𝚄𝚁 𝚀𝚄𝙴𝚁𝚈  🔰{search}"
+    if imdb and imdb.get('poster'):
+        try:
+            await message.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><u>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{message.text} 👇</b>", reply_markup=InlineKeyboardMarkup(btn))
+
     
+        except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
+            pic = imdb.get('poster')
+            poster = pic.replace('.jpg', "._V1_UX360.jpg")
+            await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+        except Exception as e:
+            logger.exception(e)
+            await message.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><u>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{message.text} 👇</b>", reply_markup=InlineKeyboardMarkup(btn))
+    else:
+        await message.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><u>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{message.text} 👇</b>", reply_markup=InlineKeyboardMarkup(btn))
+    if spoll:
+        await msg.message.delete()
 
 async def advantage_spell_chok(msg):
     search = msg.text

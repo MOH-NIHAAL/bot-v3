@@ -83,12 +83,12 @@ async def next_page(bot, query):
             for file in files
         ]
 
-    if 0 < offset <= 4:
+    if 0 < offset <= 5:
         off_set = 0
     elif offset == 0:
         off_set = None
     else:
-        off_set = offset - 4
+        off_set = offset - 5
     if n_offset == 0:
         btn.append(
             [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
@@ -446,7 +446,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         del n2, n
         
     elif query.data == "pages":
-        await query.answer('Page No : 2 | Total Results : 4')
+        await query.answer('Page No : 2 | Total Results : 5')
   
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")

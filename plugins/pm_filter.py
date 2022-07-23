@@ -8,8 +8,8 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, \
-    SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
+from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, \
+    SINGLE_BUTTON, SPELL_CHECK_REPLY, CH_FILTER, CH_LINK
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, UserIsBlocked, MessageNotModified, PeerIdInvalid
@@ -41,7 +41,7 @@ async def give_filter(client, message):
 async def next_page(bot, query):
     ident, req, key, offset = query.data.split("_")
     if int(req) not in [query.from_user.id, 0]:
-        return await query.answer("oKda", show_alert=True)
+        return await query.answer("ʙʀᴏ sᴇᴀʀᴄʜ ʏᴏᴜʀ ᴏᴡɴ ᴅᴏɴᴏᴛ ʀᴇǫᴜᴇsᴛ ᴏᴛʜᴇʀs 🤧", show_alert=True)
     try:
         offset = int(offset)
     except:
@@ -83,12 +83,12 @@ async def next_page(bot, query):
             for file in files
         ]
 
-    if 0 < offset <= 10:
+    if 0 < offset <= 4:
         off_set = 0
     elif offset == 0:
         off_set = None
     else:
-        off_set = offset - 10
+        off_set = offset - 4
     if n_offset == 0:
         btn.append(
             [InlineKeyboardButton("⏪ BACK", callback_data=f"next_{req}_{key}_{off_set}"),
@@ -124,7 +124,7 @@ async def advantage_spoll_choker(bot, query):
         return await query.message.delete()
     movies = SPELL_CHECK.get(query.message.reply_to_message.message_id)
     if not movies:
-        return await query.answer("You are clicking on an old button which is expired.", show_alert=True)
+        return await query.answer("Aʜʜ... Bᴜᴛᴛᴏɴ Exᴘɪʀᴇᴅ Pʟᴇᴀsᴇ Rᴇǫᴜᴇsᴛ Aɢᴀɪɴ 🙂", show_alert=True)
     movie = movies[(int(movie_))]
     await query.answer('Checking for Movie in database...')
     k = await manual_filters(bot, query.message, text=movie)
@@ -194,7 +194,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 except:
                     pass
             else:
-                await query.answer("That's not for you!!", show_alert=True)
+                await query.answer("ʙᴜᴅᴅʏ ᴅᴏɴ'ᴛ ᴛᴏᴜᴄʜ ᴏᴛʜᴇʀs ᴘʀᴏᴘᴇʀᴛʏ 😁", show_alert=True)
     elif "groupcb" in query.data:
         await query.answer()
 
@@ -360,7 +360,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
                 ur = await client.send_cached_media(
                     chat_id=CH_FILTER,
                     file_id=file_id,
-                    caption=f_caption,
+                    caption=f'<b>ʜᴇʏ 👋 {query.from_user.mention}</b> 😍\n\n<code>[CL] {title}</code>\n\n⚠️ <i>This file will be deleted from here within 5 minute as it has copyright ... !!!</i>\n\n<i>കോപ്പിറൈറ്റ് ഉള്ളതുകൊണ്ട് ഫയൽ 5 മിനിറ്റിനുള്ളിൽ ഇവിടെനിന്നും ഡിലീറ്റ് ആകുന്നതാണ് അതുകൊണ്ട് ഇവിടെ നിന്നും മറ്റെവിടെക്കെങ്കിലും മാറ്റിയതിന് ശേഷം ഡൗൺലോഡ് ചെയ്യുക!</i>\n\n<i><b>⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ {query.message.chat.title}</b></i>',
                     protect_content=True if ident == "filep" else False 
                 )
                 ur2 = await query.message.reply_text(
@@ -421,7 +421,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         n = await client.send_cached_media(
             chat_id=CH_FILTER,
             file_id=file_id,
-            caption=f_caption,
+            caption=f'<b>ʜᴇʏ 👋 {query.from_user.mention}</b> 😍\n\n<code>[CL] {title}</code>\n\n⚠️ <i>This file will be deleted from here within 5 minute as it has copyright ... !!!</i>\n\n<i>കോപ്പിറൈറ്റ് ഉള്ളതുകൊണ്ട് ഫയൽ 5 മിനിറ്റിനുള്ളിൽ ഇവിടെനിന്നും ഡിലീറ്റ് ആകുന്നതാണ് അതുകൊണ്ട് ഇവിടെ നിന്നും മറ്റെവിടെക്കെങ്കിലും മാറ്റിയതിന് ശേഷം ഡൗൺലോഡ് ചെയ്യുക!</i>\n\n<i><b>⚡ ᴘᴏᴡᴇʀᴇᴅ ʙʏ {query.message.chat.title}</b></i>',
             protect_content=True if ident == 'checksubp' else False
         )
         n2 = await query.message.reply_text(
@@ -446,7 +446,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
         del n2, n
         
     elif query.data == "pages":
-        await query.answer()
+        await query.answer('Page No : 2 | Total Results : 4')
   
     elif query.data.startswith("setgs"):
         ident, set_type, status, grp_id = query.data.split("#")
@@ -550,13 +550,13 @@ async def auto_filter(client, msg, spoll=False):
         BUTTONS[key] = search
         req = message.from_user.id if message.from_user else 0
         btn.append(
-            [InlineKeyboardButton(text="ɴᴇxᴛ ➡️", callback_data=f"next_{req}_{key}_{offset}")]
+            [InlineKeyboardButton(text="NEXT ➡️", callback_data=f"next_{req}_{key}_{offset}")]
         )
     else:
         btn.append(
             [InlineKeyboardButton(text="🗓 1 - 1", callback_data="pages")]
         )
-        await msg.reply_photo(photo="", caption=f"<b><v>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{Search} 👇</b>", rely_markup=InlineKeyboardMarkup(btn))
+        await msg.reply_photo(photo="https://telegra.ph/file/0906ec4afd7875fa8e9a0.jpg", caption=f"<b><v>Hey {message.from_user.mention} Buddy</u>\n\nHere What I Found For Your Query #{Search} 👇</b>", rely_markup=InlineKeyboardMarkup(btn))
     
 
 async def advantage_spell_chok(msg):
@@ -568,7 +568,7 @@ async def advantage_spell_chok(msg):
     g_s += await search_gagala(msg.text)
     gs_parsed = []
     if not g_s:
-        k = await msg.reply("I couldn't find any movie in that name.")
+        k = await msg.reply("⚠︎  𝙸 𝙲𝙾𝚄𝙻𝙳𝙽'𝚃 𝙵𝙸𝙽𝙳 𝙰𝙽𝚈𝚃𝙷𝙸𝙽𝙶 𝚁𝙴𝙻𝙰𝚃𝙴𝙳 𝚃𝙾 𝚃𝙷𝙰𝚃 . 𝙲𝙷𝙴𝙲𝙺 𝚈𝙾𝚄 𝚂𝙿𝙴𝙻𝙻𝙸𝙽𝙶 ⚠︎")
         await asyncio.sleep(8)
         await k.delete()
         return
@@ -597,17 +597,19 @@ async def advantage_spell_chok(msg):
     movielist += [(re.sub(r'(\-|\(|\)|_)', '', i, flags=re.IGNORECASE)).strip() for i in gs_parsed]
     movielist = list(dict.fromkeys(movielist))  # removing duplicates
     if not movielist:
-        k = await msg.reply("I couldn't find anything related to that. Check your spelling")
+        k = await msg.reply("⚠︎  𝙸 𝙲𝙾𝚄𝙻𝙳𝙽'𝚃 𝙵𝙸𝙽𝙳 𝙰𝙽𝚈𝚃𝙷𝙸𝙽𝙶 𝚁𝙴𝙻𝙰𝚃𝙴𝙳 𝚃𝙾 𝚃𝙷𝙰𝚃 . 𝙲𝙷𝙴𝙲𝙺 𝚈𝙾𝚄 𝚂𝙿𝙴𝙻𝙻𝙸𝙽𝙶 ⚠︎")
         await asyncio.sleep(8)
         await k.delete()
         return
     SPELL_CHECK[msg.message_id] = movielist
     buttons = [[
-        InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/q?={msg.text}")
+        InlineKeyboardButton('🕵️‍♂️ sᴇᴀʀᴄʜ ᴏɴ ɢᴏᴏɢʟᴇ 🕵️‍♂️', url=f"https://google.com/q?={msg.text.replace(" ", "+")}")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
-    await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....If you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️). Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)
-
+    v = await msg.reply_text(photo="https://telegra.ph/file/356c8683d99c443178a91.jpg", caption="Look in Google or any internet browser's and find the right movie name and send it here for the movie / series ....If you still do not get it. Send a message to our support Group We will try to upload if requested one is theatre print Not Get It (Theatre Print ❌️). Ott and Dvd released movies, will upload within 24 hours.", reply_markup=reply_markup)
+    await asyncio.sleep(100)
+    await v.delete()
+    
 async def manual_filters(client, message, text=False):
     group_id = message.chat.id
     name = text or message.text
